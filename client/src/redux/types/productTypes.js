@@ -1,0 +1,10 @@
+const productTypes = {
+    GET_PRODUCTS: "GET_PRODUCTS",
+    UPDATE_CART: "UPDATE_CART",
+    GET_RATES: "GET_RATES",
+    CHANGE_RATE: "CHANGE_RATE",
+    CHANGE_SORT: "CHANGE_SORT",
+    CHANGE_SEARCH_VALUE: "CHANGE_SEARCH_VALUE"
+}
+
+export default productTypes
