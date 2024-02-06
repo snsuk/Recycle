@@ -3,6 +3,9 @@ import bcrypt from "bcrypt"
 
 const {Schema, model} = mongoose
 
+const ROLES = ['user', 'seller', 'moderator', 'admin'];
+const TYPE = ['individual', 'legal']
+
 const userSchema = new Schema({
     name: {
         type: String,
@@ -20,11 +23,24 @@ const userSchema = new Schema({
         required: true,
         trim: true
     },
+    chats: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'chats',
+        },
+    ],
     role: {
         type: String,
-        default: 'user'
+        enum: ROLES,
+        default: 'user' // или 'seller', в зависимости от вашего выбора
+    },
+    userType: {
+        type: String,
+        enum: TYPE,
+        default: 'individual'
     }
-}, {versionKey: false, timestamps: true})
+}, { versionKey: false, timestamps: true });
+
 
 userSchema.pre('save', function(next){
     if (!this.isModified('password')) return next()

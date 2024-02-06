@@ -1,22 +1,32 @@
-import {Strategy, ExtractJwt} from 'passport-jwt'
-import dotenv from "dotenv"
-import User from "../models/userModel.js"
-dotenv.config()
+import { Strategy, ExtractJwt } from 'passport-jwt';
+import User from '../models/userModel.js';
+
 const cookieExtractor = function (req) {
-    return req && req.cookies && req.cookies.token
+    return req && req.cookies && req.cookies.token;
 };
 
 const options = {
-    secretOrKey: process.env.SECRET || "secret",
+    secretOrKey: process.env.SECRET || "secret-key-for-jwt",
     jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor])
 }
 
-const jwtStrategy = new Strategy(options, (jwt, done) => {
-    User.findById(jwt._id, (error, user) => {
-        if(error) return done(error, false)
-        if(user) return done(null, user)
-        return done(null, false)
-    })
-})
+const jwtStrategy = new Strategy(options, async (jwt, done) => {
+    try {
+        const user = await User.findById(jwt._id);
+        if (user) {
+            user.role = user.role || 'user';
 
-export default jwtStrategy
+            const isAdmin = user.role === 'admin'; 
+
+            return done(null, user, { isAdmin });
+        } else {
+            return done(null, false);
+        }
+    } catch (error) {
+        return done(error, false);
+    }
+});
+
+
+
+export default jwtStrategy;

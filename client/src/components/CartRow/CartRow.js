@@ -1,6 +1,6 @@
 import React from "react"
 import {RiDeleteBin5Line} from "react-icons/ri"
-import ProductButtons from "../ProductButtons/ProductButtons";
+import ProductButtons1 from "../ProductButtons1/ProductButtons1";
 import {removeAllFromCart} from '../../redux/actions/productActions';
 import {useDispatch} from "react-redux";
 
@@ -25,7 +25,7 @@ const CartRow = ({product}) => {
             <td className="px-4 py-3 text-ms font-semibold border">
                 <div className="flex flex-col sm:flex-row justify-center">
                     <div className="flex justify-center sm:mr-6 mb-4 sm:mb-0">
-                        <ProductButtons product={product} count={product.count} cart={true}/>
+                        <ProductButtons1 product={product} count={product.count} cart={true}/>
                     </div>
                     <div className="w-full">
                         <button onClick={() => dispatch(removeAllFromCart(product._id))}

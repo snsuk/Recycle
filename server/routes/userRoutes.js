@@ -1,13 +1,26 @@
-import express from "express"
-import {signUp, signIn, authenticate} from "../controllers/authControllers.js";
-import authMiddleware from "../middleware/authMiddleware.js"
-const router = express.Router()
+import express from "express";
+import {signUp, signIn, authenticate, getUsers, addAdminUser} from "../controllers/authControllers.js";
+import authMiddleware from "../middleware/authMiddleware.js";
+import {deleteAdminUser } from "../controllers/authControllers.js";
+import { sendAdminNotification } from '../controllers/authControllers.js';
 
-router.post('/signup', signUp)
-router.post('/signin', signIn)
-router.get('/authenticate', authenticate)
+const router = express.Router();
+
+router.post('/signup', signUp);
+router.post('/signin', signIn);
+router.get('/authenticate', authenticate);
+router.post('/notifications', sendAdminNotification);
+
+router.get('/users', authMiddleware(), (req, res) => {
+    console.log('Authenticated user:', req.user); 
+  });
+  
+
+router.get('/admin/users', authMiddleware(), getUsers);
 
 
+router.post('/admin/users', authMiddleware(), addAdminUser);
 
-export default router
+router.delete('/admin/users/:userId', authMiddleware(), deleteAdminUser);
 
+export default router;

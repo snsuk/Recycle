@@ -8,21 +8,26 @@ const ProductButtons = ({product, count, cart = false}) => {
     return (
         <>
             <button
-                onClick={() => dispatch(removeFromCart(product))}
-                className={`w-10 h-10 bg-red-400 hover:bg-red-500 active:bg-red-600 text-3xl font-bold rounded-l-lg`}
-            >
-                -
-            </button>
-            <span className={`text-center ${cart ? "w-10 sm:w-20" : "w-20"} pt-1 h-10 bg-gray-200 text-2xl`}>
-                        {count}
-                    </span>
-            <button
                 onClick={() => dispatch(addToCart(product))}
-                className={`w-10 h-10 bg-green-400 hover:bg-green-500 active:bg-green-600 text-3xl font-semibold rounded-r-lg`}
+                className="flex items-center justify-center w-4/6 h-12 bg-gray-900 hover:bg-gray-200 hover:text-black mt-2 text-white font-semibold rounded-md transition duration-300"
             >
-                +
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-4 h-4 mr-2"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM9 12h6m-3-3v6"></path>
+                </svg>
+                 В корзину
             </button>
         </>
-    )
+    );
 }
+
+
 export default ProductButtons
